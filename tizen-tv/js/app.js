@@ -147,22 +147,48 @@ class GameOnTVApp {
         this.servers = [];
 
         try {
-            // Scan common local network ranges
-            const subnet = await this.getLocalSubnet();
+            // Common subnet patterns to try
+            const subnets = ['192.168.1', '192.168.0', '10.0.0', '192.168.100'];
             const promises = [];
+            const BATCH_SIZE = 20; // Scan in batches to avoid overwhelming the network
 
-            // Try to discover servers on the local network
-            for (let i = 1; i <= 254; i++) {
-                const ip = `${subnet}.${i}`;
-                promises.push(this.checkServer(ip, 8080));
+            for (const subnet of subnets) {
+                // Scan most common addresses first
+                const commonAddresses = [1, 100, 101, 102, 254];
+                
+                for (const addr of commonAddresses) {
+                    const ip = `${subnet}.${addr}`;
+                    promises.push(this.checkServer(ip, 8080));
+                }
             }
 
+            // Wait for common addresses first
             await Promise.all(promises);
 
             if (this.servers.length > 0) {
                 discoveryText.textContent = `Found ${this.servers.length} PC controller(s)`;
                 this.renderServers();
             } else {
+                // If nothing found, scan more addresses in batches
+                discoveryText.textContent = 'Scanning additional addresses...';
+                
+                for (const subnet of subnets) {
+                    for (let i = 2; i < 254; i += BATCH_SIZE) {
+                        const batchPromises = [];
+                        for (let j = 0; j < BATCH_SIZE && (i + j) < 254; j++) {
+                            const ip = `${subnet}.${i + j}`;
+                            batchPromises.push(this.checkServer(ip, 8080));
+                        }
+                        await Promise.all(batchPromises);
+                        
+                        if (this.servers.length > 0) {
+                            discoveryText.textContent = `Found ${this.servers.length} PC controller(s)`;
+                            this.renderServers();
+                            return;
+                        }
+                    }
+                }
+
                 discoveryText.textContent = 'No PC controllers found';
                 serverList.innerHTML = '<div class="empty-state">Make sure your PC is running the Game-on-TV PC Controller app and connected to the same network</div>';
             }
@@ -173,16 +199,21 @@ class GameOnTVApp {
     }
 
     async getLocalSubnet() {
-        // This is a simplified version - in production, you'd get the actual network info
+        // This method is no longer used - keeping for API compatibility
         return '192.168.1';
     }
 
     async checkServer(ip, port) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 1000);
+
         try {
             const response = await fetch(`http://${ip}:${port}/api/discover`, {
                 method: 'GET',
-                timeout: 1000
+                signal: controller.signal
             });
+
+            clearTimeout(timeoutId);
 
             if (response.ok) {
                 const data = await response.json();
@@ -195,7 +226,8 @@ class GameOnTVApp {
                 });
             }
         } catch (error) {
-            // Server not found at this IP
+            // Server not found at this IP or timeout - this is expected
+            clearTimeout(timeoutId);
         }
     }
 
