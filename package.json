@@ -1,0 +1,23 @@
+{
+  "name": "game-on-tv",
+  "version": "1.0.0",
+  "description": "Stream PC games to Samsung Tizen TV - Open source game streaming solution",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luizwbr/game-on-tv.git"
+  },
+  "keywords": [
+    "game-streaming",
+    "samsung-tv",
+    "tizen",
+    "pc-games",
+    "webrtc",
+    "local-network"
+  ],
+  "author": "",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "pc-controller"
+  ]
+}

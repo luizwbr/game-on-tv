@@ -1,0 +1,40 @@
+{
+  "name": "game-on-tv-pc-controller",
+  "version": "1.0.0",
+  "description": "PC game streaming controller for Samsung Tizen TV",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder"
+  },
+  "keywords": [
+    "game-streaming",
+    "tizen",
+    "samsung-tv",
+    "webrtc"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.14.2",
+    "node-webrtc": "^0.4.7",
+    "robotjs": "^0.6.0"
+  },
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4"
+  },
+  "build": {
+    "appId": "com.gameon.tv.pc",
+    "productName": "Game-on-TV PC Controller",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ]
+  }
+}

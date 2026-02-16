@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game-on-TV</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="$WEBAPIS/webapis/webapis.js"></script>
+</head>
+<body>
+    <div id="app" class="app">
+        <!-- Discovery Screen -->
+        <div id="discoveryScreen" class="screen active">
+            <div class="header">
+                <h1>🎮 Game-on-TV</h1>
+                <p class="subtitle">Stream PC Games to Your TV</p>
+            </div>
+            <div class="content">
+                <div class="discovery-status">
+                    <div class="spinner"></div>
+                    <p id="discoveryText">Searching for PC controllers on your network...</p>
+                </div>
+                <div id="serverList" class="server-list"></div>
+                <div class="instructions">
+                    <p>Make sure your PC is running the Game-on-TV PC Controller app</p>
+                    <p>Press <span class="key">ENTER</span> to scan again</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Connecting Screen -->
+        <div id="connectingScreen" class="screen">
+            <div class="header">
+                <h1>🎮 Game-on-TV</h1>
+            </div>
+            <div class="content centered">
+                <div class="spinner large"></div>
+                <h2>Connecting to PC...</h2>
+                <p id="connectingText"></p>
+            </div>
+        </div>
+
+        <!-- Streaming Screen -->
+        <div id="streamingScreen" class="screen">
+            <video id="videoPlayer" autoplay playsinline></video>
+            <div id="streamingOverlay" class="streaming-overlay">
+                <div class="overlay-header">
+                    <span class="live-indicator">🔴 LIVE</span>
+                    <span id="streamInfo"></span>
+                </div>
+                <div class="overlay-controls">
+                    <p>Press <span class="key">RETURN</span> to disconnect</p>
+                    <p>Press <span class="key">INFO</span> to show/hide controls</p>
+                </div>
+            </div>
+            <div id="controlsPanel" class="controls-panel hidden">
+                <h3>Stream Controls</h3>
+                <div class="control-item">
+                    <span>Status:</span>
+                    <span id="connectionStatus">Connected</span>
+                </div>
+                <div class="control-item">
+                    <span>Resolution:</span>
+                    <span id="currentResolution">-</span>
+                </div>
+                <div class="control-item">
+                    <span>FPS:</span>
+                    <span id="currentFPS">-</span>
+                </div>
+                <div class="control-item">
+                    <span>Latency:</span>
+                    <span id="latency">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Screen -->
+        <div id="errorScreen" class="screen">
+            <div class="header">
+                <h1>🎮 Game-on-TV</h1>
+            </div>
+            <div class="content centered">
+                <div class="error-icon">⚠️</div>
+                <h2>Connection Error</h2>
+                <p id="errorText"></p>
+                <p class="hint">Press <span class="key">RETURN</span> to go back</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
