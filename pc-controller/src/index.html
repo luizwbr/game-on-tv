@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game-on-TV PC Controller</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎮 Game-on-TV PC Controller</h1>
+      <p class="subtitle">Stream your PC games to Samsung Tizen TV</p>
+    </header>
+
+    <main>
+      <section class="server-status">
+        <h2>Server Status</h2>
+        <div class="status-card">
+          <div class="status-indicator" id="statusIndicator">
+            <span class="status-dot"></span>
+            <span id="statusText">Initializing...</span>
+          </div>
+          <div class="server-info" id="serverInfo">
+            <p><strong>Hostname:</strong> <span id="hostname">-</span></p>
+            <p><strong>Port:</strong> <span id="port">-</span></p>
+            <p><strong>Local Addresses:</strong></p>
+            <ul id="addressList"></ul>
+            <p><strong>Connected Clients:</strong> <span id="clientCount">0</span></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="streaming-control">
+        <h2>Streaming Control</h2>
+        <div class="control-card">
+          <div class="streaming-status" id="streamingStatus">
+            <span class="stream-indicator">⚫</span>
+            <span>Not Streaming</span>
+          </div>
+          <div class="control-buttons">
+            <button id="startStreamBtn" class="btn btn-primary">Start Streaming</button>
+            <button id="stopStreamBtn" class="btn btn-secondary" disabled>Stop Streaming</button>
+          </div>
+          <div class="stream-config">
+            <h3>Stream Configuration</h3>
+            <div class="config-group">
+              <label for="resolution">Resolution:</label>
+              <select id="resolution">
+                <option value="1920x1080">1920x1080 (Full HD)</option>
+                <option value="2560x1440">2560x1440 (2K)</option>
+                <option value="3840x2160">3840x2160 (4K)</option>
+              </select>
+            </div>
+            <div class="config-group">
+              <label for="fps">Frame Rate:</label>
+              <select id="fps">
+                <option value="30">30 FPS</option>
+                <option value="60" selected>60 FPS</option>
+                <option value="120">120 FPS</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="connected-clients">
+        <h2>Connected Clients</h2>
+        <div class="clients-card">
+          <div id="clientsList" class="clients-list">
+            <p class="empty-state">No clients connected</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="instructions">
+        <h2>How to Connect</h2>
+        <div class="instructions-card">
+          <ol>
+            <li>Install the Game-on-TV app on your Samsung Tizen TV</li>
+            <li>Make sure your TV and PC are on the same local network</li>
+            <li>Open the app on your TV and select "Discover PC"</li>
+            <li>Your PC should appear in the list - select it to connect</li>
+            <li>Click "Start Streaming" above to begin streaming</li>
+          </ol>
+          <div class="tip">
+            <strong>💡 Tip:</strong> For best performance, use a wired Ethernet connection for both your PC and TV.
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
